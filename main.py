@@ -235,4 +235,104 @@ constrained_result = minimize(constrained_objective, initial_guess, constraints=
 
 
 # NumPy in Data Manipulation and Analysis
-# NumPy provides a robust framework for working with multidimensional arrays, making it a powerful tool for data manipulation and analysis.
+# NumPy provides a robust framework for working with multidimensional arrays, making it a powerful tool for data manipulation and analysis.# Creating a 1D array
+
+# Creating NumPy Arrays:
+array_1d = np.array([1, 2, 3])
+array_2d = np.array([[1, 2, 3], [4, 5, 6]])
+# Creating an array with zeros
+zeros_array = np.zeros((3, 4))
+# Creating an array with ones
+ones_array = np.ones((2, 2))
+# Creating a range of values
+range_array = np.arange(0, 10, 2)
+
+# NumPy Operations for Data Manipulation:
+# Indexing and slicing
+array_2d = np.array([[1, 2, 3], [4, 5, 6]])
+element = array_2d[1, 2]
+sliced_row = array_2d[0, :]
+# Aggregation and Statistical Operations:
+array_2d = np.array([[1, 2, 3], [4, 5, 6]])
+mean_value = np.mean(array_2d)
+sum_axis_0 = np.sum(array_2d, axis=0)
+# Boolean Indexing:
+array_1d = np.array([1, 2, 3, 4, 5])
+even_numbers = array_1d[array_1d % 2 == 0]
+
+# NumPy in Data Analysis
+# Loading Data with NumPy:
+# data = np.loadtxt('data.txt', delimiter=',')
+# Data Reshaping:
+array_1d = np.arange(1, 7)
+reshaped_array = array_1d.reshape((2, 3))
+
+
+# NumPy in Machine Learning
+# Loading Data:
+# NumPy is often used in conjunction with Pandas for loading and handling datasets. 
+# Pandas provides DataFrames, and NumPy facilitates the conversion of DataFrame columns into NumPy arrays
+
+import pandas as pd 
+import matplotlib.pyplot as plt
+
+# Loading data from a CSV file using Pandas
+data = pd.read_csv('dataset.csv')
+
+# Converting a DataFrame column to a NumPy array
+target = data['target'].values
+
+# Data Preprocessing:
+# Before feeding data into machine learning models, preprocessing is essential. 
+# NumPy integrates seamlessly with scikit-learn for tasks like feature scaling.
+
+from sklearn.preprocessing import StandardScaler
+
+# Standardizing features using scikit-learn and NumPy
+scaler = StandardScaler()
+standardized_data = scaler.fit_transform(data)
+
+# NumPy in Model Training:
+# example with synthetic data for a linear regression problem
+# Generating synthetic data
+np.random.seed(42)  # For reproducibility
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
+
+# Visualizing the data
+plt.scatter(X, y, alpha=0.7)
+plt.title('Synthetic Data for Linear Regression')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.show()
+
+# Adding a bias term to features
+X_b = np.c_[np.ones((100, 1)), X]
+
+# Initializing weights and biases
+weights = np.zeros((2, 1))
+
+# Setting hyperparameters
+learning_rate = 0.01
+num_epochs = 1000
+
+# Training the model using gradient descent
+for epoch in range(num_epochs):
+    predictions = np.dot(X_b, weights)
+    mse_loss = np.mean((predictions - y) ** 2)
+
+    # Backpropagation
+    gradients = 2/100 * X_b.T.dot(predictions - y)
+    weights -= learning_rate * gradients
+
+# Visualizing the trained model
+plt.scatter(X, y, alpha=0.7, label='Original Data')
+plt.plot(X, predictions, color='red', label='Linear Regression')
+plt.title('Linear Regression with Gradient Descent')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+# Assuming you have a dataset with features and targets
+# features = np.array([[feature1, feature2], [feature3, feature4], ...])
+# targets = np.array([target1, target2, ...])
