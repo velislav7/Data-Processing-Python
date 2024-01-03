@@ -277,10 +277,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Loading data from a CSV file using Pandas
-data = pd.read_csv('dataset.csv')
+# data = pd.read_csv('dataset.csv')
 
 # Converting a DataFrame column to a NumPy array
-target = data['target'].values
+# target = data['target'].values
 
 # Data Preprocessing:
 # Before feeding data into machine learning models, preprocessing is essential. 
@@ -333,6 +333,46 @@ plt.xlabel('X')
 plt.ylabel('y')
 plt.legend()
 plt.show()
-# Assuming you have a dataset with features and targets
-# features = np.array([[feature1, feature2], [feature3, feature4], ...])
-# targets = np.array([target1, target2, ...])
+
+# Forward propagation (making predictions)
+predictions = np.dot(X_b, weights)
+
+# Visualizing the predictions
+plt.scatter(X, y, alpha=0.7, label='Original Data')
+plt.plot(X, predictions, color='red', label='Linear Regression Predictions')
+plt.title('Forward Propagation: Predictions on the Training Data')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+# Calculating mean squared error loss
+mse_loss = np.mean((predictions - y) ** 2)
+print(f'Mean Squared Error Loss: {mse_loss}')
+
+# Backpropagation for one step
+gradients = 2/100 * X_b.T.dot(predictions - y)
+weights -= learning_rate * gradients
+
+# Iterative optimization
+for epoch in range(num_epochs):
+    predictions = np.dot(X_b, weights)
+    mse_loss = np.mean((predictions - y) ** 2)
+
+    # Backpropagation
+    gradients = 2/100 * X_b.T.dot(predictions - y)
+    weights -= learning_rate * gradients
+
+# Generating new data for evaluation
+X_new = 2 * np.random.rand(20, 1)
+y_new = 4 + 3 * X_new + np.random.randn(20, 1)
+
+# Adding bias term to new features
+X_new_b = np.c_[np.ones((20, 1)), X_new]
+
+# Making predictions on new data
+predictions_new = np.dot(X_new_b, weights)
+
+# Calculating mean squared error on new data
+mse_loss_new = np.mean((predictions_new - y_new) ** 2)
+print(f'Mean Squared Error on New Data: {mse_loss_new}')
